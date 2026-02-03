@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'rapidapi' => [
+        'movies' => [
+            'host' => env('RAPIDAPI_MOVIES_HOST', 'moviesdatabase.p.rapidapi.com'),
+            'key' => env('RAPIDAPI_MOVIES_KEY'),
+            'url' => env('RAPIDAPI_MOVIES_URL', 'https://moviesdatabase.p.rapidapi.com/titles'),
+        ],
+    ],
+
 ];

@@ -30,11 +30,29 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'author' => 'required|string|max:255',
-            'published_at' => 'nullable|date',
+            'title' => 'required|string|max:255|min:3',
+            'content' => 'required|string|min:10|max:50000',
+            'author' => 'required|string|max:255|min:2',
+            'published_at' => 'nullable|date|before_or_equal:now',
+        ], [
+            'title.required' => 'O título é obrigatório.',
+            'title.min' => 'O título deve ter pelo menos 3 caracteres.',
+            'title.max' => 'O título não pode exceder 255 caracteres.',
+            'content.required' => 'O conteúdo é obrigatório.',
+            'content.min' => 'O conteúdo deve ter pelo menos 10 caracteres.',
+            'content.max' => 'O conteúdo não pode exceder 50.000 caracteres.',
+            'author.required' => 'O autor é obrigatório.',
+            'author.min' => 'O nome do autor deve ter pelo menos 2 caracteres.',
+            'author.max' => 'O nome do autor não pode exceder 255 caracteres.',
+            'published_at.date' => 'A data de publicação deve ser uma data válida.',
+            'published_at.before_or_equal' => 'A data de publicação não pode ser no futuro.',
         ]);
+
+        // Sanitização adicional
+        $validated['title'] = strip_tags($validated['title']);
+        $validated['author'] = strip_tags($validated['author']);
+        // Permitir HTML básico no conteúdo, mas remover scripts
+        $validated['content'] = strip_tags($validated['content'], '<p><br><strong><em><ul><ol><li><a><h1><h2><h3><h4><h5><h6>');
 
         News::create($validated);
 
@@ -68,11 +86,29 @@ class NewsController extends Controller
         $news = News::findOrFail($id);
         
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'author' => 'required|string|max:255',
-            'published_at' => 'nullable|date',
+            'title' => 'required|string|max:255|min:3',
+            'content' => 'required|string|min:10|max:50000',
+            'author' => 'required|string|max:255|min:2',
+            'published_at' => 'nullable|date|before_or_equal:now',
+        ], [
+            'title.required' => 'O título é obrigatório.',
+            'title.min' => 'O título deve ter pelo menos 3 caracteres.',
+            'title.max' => 'O título não pode exceder 255 caracteres.',
+            'content.required' => 'O conteúdo é obrigatório.',
+            'content.min' => 'O conteúdo deve ter pelo menos 10 caracteres.',
+            'content.max' => 'O conteúdo não pode exceder 50.000 caracteres.',
+            'author.required' => 'O autor é obrigatório.',
+            'author.min' => 'O nome do autor deve ter pelo menos 2 caracteres.',
+            'author.max' => 'O nome do autor não pode exceder 255 caracteres.',
+            'published_at.date' => 'A data de publicação deve ser uma data válida.',
+            'published_at.before_or_equal' => 'A data de publicação não pode ser no futuro.',
         ]);
+
+        // Sanitização adicional
+        $validated['title'] = strip_tags($validated['title']);
+        $validated['author'] = strip_tags($validated['author']);
+        // Permitir HTML básico no conteúdo, mas remover scripts
+        $validated['content'] = strip_tags($validated['content'], '<p><br><strong><em><ul><ol><li><a><h1><h2><h3><h4><h5><h6>');
 
         $news->update($validated);
 

@@ -66,13 +66,12 @@
                                         <a href="{{ route('news.edit', $item->id) }}" class="inline-flex items-center justify-center w-9 h-9 bg-yellow-100 hover:bg-yellow-200 rounded-lg transition-colors shadow-sm hover:shadow-md border border-yellow-300" title="Editar">
                                             <i class="bi bi-pencil text-base font-semibold text-yellow-700"></i>
                                         </a>
-                                        <form action="{{ route('news.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('Tem certeza que deseja excluir esta notícia? Esta ação não pode ser desfeita.');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="inline-flex items-center justify-center w-9 h-9 bg-white hover:bg-red-50 rounded-lg transition-colors shadow-sm hover:shadow-md border border-red-300" title="Excluir">
-                                                <i class="bi bi-trash text-base font-semibold text-red-600"></i>
-                                            </button>
-                                        </form>
+                                        <button type="button" 
+                                                onclick="openDeleteModal({{ $item->id }}, '{{ addslashes($item->title) }}')" 
+                                                class="inline-flex items-center justify-center w-9 h-9 bg-white hover:bg-red-50 rounded-lg transition-colors shadow-sm hover:shadow-md border border-red-300" 
+                                                title="Excluir">
+                                            <i class="bi bi-trash text-base font-semibold text-red-600"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -97,13 +96,12 @@
                                 <a href="{{ route('news.edit', $item->id) }}" class="inline-flex items-center justify-center w-8 h-8 bg-yellow-100 hover:bg-yellow-200 rounded-lg transition-colors shadow-sm border border-yellow-300" title="Editar">
                                     <i class="bi bi-pencil text-sm font-semibold text-yellow-700"></i>
                                 </a>
-                                <form action="{{ route('news.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('Tem certeza que deseja excluir esta notícia? Esta ação não pode ser desfeita.');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="inline-flex items-center justify-center w-8 h-8 bg-white hover:bg-red-50 rounded-lg transition-colors shadow-sm border border-red-300" title="Excluir">
-                                        <i class="bi bi-trash text-sm font-semibold text-red-600"></i>
-                                    </button>
-                                </form>
+                                <button type="button" 
+                                        onclick="openDeleteModal({{ $item->id }}, '{{ addslashes($item->title) }}')" 
+                                        class="inline-flex items-center justify-center w-8 h-8 bg-white hover:bg-red-50 rounded-lg transition-colors shadow-sm border border-red-300" 
+                                        title="Excluir">
+                                    <i class="bi bi-trash text-sm font-semibold text-red-600"></i>
+                                </button>
                             </div>
                         </div>
                         <div class="space-y-2 text-sm">
@@ -149,4 +147,87 @@
         @endif
     </div>
 </div>
+
+<!-- Modal de Confirmação de Exclusão -->
+<div id="deleteModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+    <!-- Overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity" onclick="closeDeleteModal()"></div>
+    
+    <!-- Modal Content -->
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full transform transition-all">
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <div class="flex-shrink-0 w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                        <i class="bi bi-exclamation-triangle text-red-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">Confirmar Exclusão</h3>
+                        <p class="text-sm text-gray-500">Esta ação não pode ser desfeita</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Body -->
+            <div class="p-6">
+                <p class="text-gray-700">
+                    Tem certeza que deseja excluir a notícia 
+                    <strong class="text-gray-900" id="deleteNewsTitle"></strong>?
+                </p>
+                <p class="text-sm text-gray-500 mt-2">
+                    Todos os dados relacionados a esta notícia serão permanentemente removidos do sistema.
+                </p>
+            </div>
+            
+            <!-- Footer -->
+            <div class="p-6 border-t border-gray-200 flex items-center justify-end space-x-3">
+                <button type="button" 
+                        onclick="closeDeleteModal()" 
+                        class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors">
+                    Cancelar
+                </button>
+                <form id="deleteForm" method="POST" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" 
+                            class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors shadow-md hover:shadow-lg">
+                        Excluir Notícia
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openDeleteModal(newsId, newsTitle) {
+        const modal = document.getElementById('deleteModal');
+        const form = document.getElementById('deleteForm');
+        const titleElement = document.getElementById('deleteNewsTitle');
+        
+        // Atualiza o formulário com a URL correta
+        form.action = `/news/${newsId}`;
+        
+        // Atualiza o título da notícia no modal
+        titleElement.textContent = newsTitle;
+        
+        // Mostra o modal
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+    
+    // Fecha o modal ao pressionar ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeDeleteModal();
+        }
+    });
+</script>
 @endsection
