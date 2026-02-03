@@ -58,11 +58,48 @@
                 </div>
             @endforeach
         </div>
-        @else
+
+        <!-- Paginação -->
+        <div class="flex items-center justify-between mt-6 pt-6 border-t border-gray-200">
+            <!-- Botão Anterior -->
+            @if($currentPage > 1)
+                <a href="{{ route('movies.index', ['page' => $currentPage - 1]) }}" 
+                   class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
+                    <i class="bi bi-chevron-left"></i>
+                    <span class="font-medium">Anterior</span>
+                </a>
+            @else
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 border border-gray-200 text-gray-400 rounded-lg cursor-not-allowed">
+                    <i class="bi bi-chevron-left"></i>
+                    <span class="font-medium">Anterior</span>
+                </div>
+            @endif
+
+            <!-- Indicador de Página -->
+            <div class="flex items-center gap-2">
+                <span class="text-sm font-medium text-gray-700">Página</span>
+                <span class="px-3 py-1 bg-primary-600 text-white rounded-lg font-semibold">{{ $currentPage }}</span>
+            </div>
+
+            <!-- Botão Próximo -->
+            @if($hasNextPage)
+                <a href="{{ route('movies.index', ['page' => $currentPage + 1]) }}" 
+                   class="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors shadow-sm">
+                    <span class="font-medium">Próximo</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            @else
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 border border-gray-200 text-gray-400 rounded-lg cursor-not-allowed">
+                    <span class="font-medium">Próximo</span>
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+            @endif
+        </div>
+    @else
             <!-- Estado vazio -->
             <div class="text-center py-12">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-[#613ed9]/10 rounded-full mb-4">
-                    <i class="bi bi-film text-[#613ed9] text-3xl"></i>
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-primary-600/10 rounded-full mb-4">
+                    <i class="bi bi-film text-primary-600 text-3xl"></i>
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Nenhum filme encontrado</h3>
                 <p class="text-gray-600">Não há filmes disponíveis no momento.</p>
