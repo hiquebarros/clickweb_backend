@@ -15,9 +15,9 @@
     <!-- Content -->
     <div class="p-6">
         @if(isset($response['results']) && count($response['results']) > 0)
-            <!-- Grid de Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                @foreach($response['results'] as $movie)
+            <!-- Grid de Cards - 5 colunas em desktop (2 linhas = 10 cards) -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+                @foreach(array_slice($response['results'], 0, 10) as $movie)
                     <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 group">
                         <!-- Capa do Filme -->
                         <div class="relative aspect-[2/3] bg-gray-200 overflow-hidden">
