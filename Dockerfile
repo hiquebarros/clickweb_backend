@@ -89,7 +89,7 @@ COPY docker/default.conf /etc/nginx/http.d/default.conf
 COPY docker/supervisord.conf /etc/supervisord.conf
 
 # Expor porta
-EXPOSE 8080
+EXPOSE 10000
 
 # Script de inicialização
 COPY docker/start.sh /usr/local/bin/start
@@ -97,7 +97,7 @@ RUN chmod +x /usr/local/bin/start
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:8080/health || exit 1
+    CMD curl -f http://localhost:10000/health || exit 1
 
 # Comando de inicialização
 CMD ["/usr/local/bin/start"]
