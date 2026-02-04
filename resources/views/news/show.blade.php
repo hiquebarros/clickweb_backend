@@ -108,7 +108,7 @@
                 </a>
                 <button type="button" 
                         onclick="openDeleteModal({{ $news->id }}, '{{ addslashes($news->title) }}')" 
-                        class="flex-1 w-full inline-flex items-center justify-center space-x-2 bg-white hover:bg-red-50 text-red-600 px-6 py-3 rounded-lg font-semibold transition-colors shadow-md hover:shadow-lg border border-red-300">
+                        class="flex-1 w-full inline-flex items-center justify-center space-x-2 bg-white hover:bg-red-50 text-red-600 px-6 py-3 rounded-lg font-semibold transition-colors shadow-md hover:shadow-lg border border-red-300 cursor-pointer">
                     <i class="bi bi-trash text-base font-semibold text-red-600"></i>
                     <span>Excluir</span>
                 </button>
@@ -153,14 +153,14 @@
             <div class="p-6 border-t border-gray-200 flex items-center justify-end space-x-3">
                 <button type="button" 
                         onclick="closeDeleteModal()" 
-                        class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors">
+                        class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors cursor-pointer">
                     Cancelar
                 </button>
                 <form id="deleteForm" method="POST" class="inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit" 
-                            class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors shadow-md hover:shadow-lg">
+                            class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors shadow-md hover:shadow-lg cursor-pointer">
                         Excluir Notícia
                     </button>
                 </form>
