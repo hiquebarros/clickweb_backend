@@ -10,10 +10,6 @@
             <i class="bi bi-list-ul"></i>
             <span>Listagem de Notícias</span>
         </h2>
-        <a href="{{ route('news.create') }}" class="bg-white text-[#613ed9] hover:bg-gray-100 px-4 py-2 rounded-lg text-sm font-semibold transition-all shadow-md hover:shadow-lg flex items-center space-x-2">
-            <i class="bi bi-plus-circle"></i>
-            <span>Nova Notícia</span>
-        </a>
     </div>
 
     <!-- Content -->
@@ -68,7 +64,7 @@
                                         </a>
                                         <button type="button" 
                                                 onclick="openDeleteModal({{ $item->id }}, '{{ addslashes($item->title) }}')" 
-                                                class="inline-flex items-center justify-center w-9 h-9 bg-white hover:bg-red-50 rounded-lg transition-colors shadow-sm hover:shadow-md border border-red-300" 
+                                                class="inline-flex items-center justify-center w-9 h-9 bg-white hover:bg-red-50 rounded-lg transition-colors shadow-sm hover:shadow-md border border-red-300 cursor-pointer" 
                                                 title="Excluir">
                                             <i class="bi bi-trash text-base font-semibold text-red-600"></i>
                                         </button>

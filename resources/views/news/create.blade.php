@@ -116,7 +116,7 @@
                 <i class="bi bi-arrow-left"></i>
                 <span>Voltar</span>
             </a>
-            <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-[#613ed9] text-white px-6 py-3 rounded-lg hover:bg-[#4c2db8] transition-colors font-semibold shadow-md hover:shadow-lg">
+            <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-[#613ed9] text-white px-6 py-3 rounded-lg hover:bg-[#4c2db8] transition-colors font-semibold shadow-md hover:shadow-lg cursor-pointer">
                 <i class="bi bi-check-circle"></i>
                 <span>Salvar Notícia</span>
             </button>
