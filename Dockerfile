@@ -70,12 +70,6 @@ FROM base AS production
 # Copiar código e dependências do build
 COPY --from=build /var/www/html /var/www/html
 
-# Limpar caches do Laravel (evita APP_URL antigo preso)
-RUN php artisan config:clear \
- && php artisan cache:clear \
- && php artisan route:clear \
- && php artisan view:clear
-
 # Criar diretórios necessários
 RUN mkdir -p /var/www/html/storage/logs \
     /var/www/html/storage/framework/sessions \

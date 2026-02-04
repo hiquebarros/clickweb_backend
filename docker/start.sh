@@ -7,6 +7,12 @@ echo "🚀 Starting Clickweb Backend..."
 # Aguardar um momento para garantir que tudo está pronto
 sleep 2
 
+# Limpa caches do Laravel agora que env vars existem
+php artisan config:clear || true
+php artisan cache:clear || true
+php artisan route:clear || true
+php artisan view:clear || true
+
 # Criar diretórios se não existirem
 mkdir -p /var/www/html/storage/logs
 mkdir -p /var/www/html/storage/framework/{sessions,views,cache}
