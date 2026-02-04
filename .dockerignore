@@ -18,7 +18,7 @@ Dockerfile
 /node_modules
 
 # Build artifacts
-/public/build
+# /public/build
 /public/hot
 /public/storage
 
