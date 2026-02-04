@@ -38,7 +38,8 @@ COPY package.json package-lock.json* ./
 RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
 
 # Instalar dependências Node
-RUN npm ci --only=production
+# RUN npm ci --only=production
+RUN npm ci
 
 # ==================================================
 # Stage: Build
@@ -49,8 +50,8 @@ FROM dependencies AS build
 COPY . .
 
 # Copiar dependências do stage anterior
-COPY --from=dependencies /var/www/html/vendor ./vendor
-COPY --from=dependencies /var/www/html/node_modules ./node_modules
+#COPY --from=dependencies /var/www/html/vendor ./vendor
+#COPY --from=dependencies /var/www/html/node_modules ./node_modules
 
 # Gerar autoload otimizado
 RUN composer dump-autoload --optimize --no-dev
