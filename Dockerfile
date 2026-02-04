@@ -11,13 +11,14 @@ RUN apk add --no-cache \
     oniguruma-dev \
     libxml2-dev \
     sqlite-dev \
+    postgresql-dev \
     nginx \
     supervisor \
     nodejs \
     npm
 
 # Instalar extensões PHP
-RUN docker-php-ext-install pdo pdo_sqlite pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install pdo pdo_sqlite pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
