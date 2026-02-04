@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    image: clickweb-backend:latest
+    container_name: clickweb_app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - APP_ENV=${APP_ENV:-production}
+      - APP_DEBUG=${APP_DEBUG:-false}
+      - APP_KEY=${APP_KEY}
+      - APP_URL=${APP_URL:-http://localhost:8080}
+      - DB_CONNECTION=${DB_CONNECTION:-sqlite}
+      - RAPIDAPI_MOVIES_HOST=${RAPIDAPI_MOVIES_HOST}
+      - RAPIDAPI_MOVIES_KEY=${RAPIDAPI_MOVIES_KEY}
+      - RAPIDAPI_MOVIES_URL=${RAPIDAPI_MOVIES_URL}
+    volumes:
+      # Persistir banco de dados SQLite
+      - ./database:/var/www/html/database
+      # Persistir storage
+      - storage_data:/var/www/html/storage
+    networks:
+      - clickweb_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  storage_data:
+    driver: local
+
+networks:
+  clickweb_network:
+    driver: bridge

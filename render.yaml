@@ -1,0 +1,51 @@
+# Render Blueprint para deploy automático
+# Documentação: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: clickweb-backend
+    runtime: docker
+    plan: starter  # ou 'free' para tier gratuito
+    region: oregon  # ou outra região de sua preferência
+    branch: main
+    
+    healthCheckPath: /health
+    
+    envVars:
+      - key: APP_NAME
+        value: Clickweb Backend
+      
+      - key: APP_ENV
+        value: production
+      
+      - key: APP_DEBUG
+        value: false
+      
+      - key: APP_KEY
+        generateValue: true  # Render gerará automaticamente
+      
+      - key: APP_URL
+        value: https://clickweb-backend.onrender.com  # Ajuste conforme seu domínio
+      
+      - key: DB_CONNECTION
+        value: sqlite
+      
+      - key: CACHE_STORE
+        value: file
+      
+      - key: SESSION_DRIVER
+        value: file
+      
+      - key: RAPIDAPI_MOVIES_HOST
+        value: moviesdatabase.p.rapidapi.com
+      
+      - key: RAPIDAPI_MOVIES_KEY
+        sync: false  # Deve ser configurado manualmente no painel
+      
+      - key: RAPIDAPI_MOVIES_URL
+        value: https://moviesdatabase.p.rapidapi.com/titles
+
+# Nota: 
+# - Para usar este arquivo, faça commit no repositório
+# - No Render, escolha "New" → "Blueprint" e selecione seu repositório
+# - Configure as variáveis sensíveis manualmente no painel
